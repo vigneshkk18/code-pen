@@ -1,5 +1,3 @@
-"use client";
-
 import shortUUID from "short-uuid";
 import { useLocation } from "wouter";
 

@@ -1,5 +1,3 @@
-"use client";
-
 import { useParams } from "wouter";
 
 import NewPen from "./new-pen";

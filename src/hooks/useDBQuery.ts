@@ -1,8 +1,8 @@
-"use client";
 import { useEffect, useRef, useState } from "react";
 
 import { DB } from "@/db";
 import { DataStoreMessage } from "./useDBMutation";
+import useIndexedDBStatus from "./useIndexedDBStatus";
 
 interface DBState<T> {
   data: T[];
@@ -36,6 +36,7 @@ export default function useDBQuery<T>(
     message: "",
     isPending: false,
   });
+  const isReady = useIndexedDBStatus();
 
   const depRef = useRef<any[]>(deps);
 
@@ -49,6 +50,7 @@ export default function useDBQuery<T>(
   }, [DB_STORE_KEY]);
 
   useEffect(() => {
+    if (!isReady) return;
     const fn = async () => {
       setDBState((prev) => ({ ...prev, isPending: true }));
       try {
@@ -80,7 +82,7 @@ export default function useDBQuery<T>(
       };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [db, depRef.current, limit, offset]);
+  }, [db, depRef.current, limit, offset, isReady]);
 
   return { dbState };
 }

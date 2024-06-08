@@ -1,5 +1,3 @@
-"use client";
-
 import { isServer } from "@/utils/utils";
 
 type DBQueryKeyType = Parameters<IDBObjectStore["get"]>[0];
@@ -21,11 +19,13 @@ export interface IDB<T> {
     limit?: number,
     offset?: number
   ) => Promise<T[]>;
+  onDBRegistered: () => void;
 }
 
 export class DB<T> implements IDB<T> {
   name: string;
   db: IDBDatabase;
+  onDBRegistered: () => void = () => {};
 
   /**
    * @returns IDB<T>
@@ -45,6 +45,7 @@ export class DB<T> implements IDB<T> {
     request.onsuccess = (event) => {
       const db = (event.target as any)?.result as IDBDatabase;
       this.db = db;
+      this.onDBRegistered();
     };
 
     request.onupgradeneeded = (event) => {
@@ -161,7 +162,7 @@ export class DB<T> implements IDB<T> {
         objCursor.onerror = () => reject("Failed to Fetch Data");
       });
 
-      objectStore.transaction.oncomplete = function (e) {
+      objectStore.transaction.oncomplete = function () {
         resPromise.then(resolve).catch(reject);
       };
 

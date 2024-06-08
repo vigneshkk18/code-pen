@@ -1,5 +1,3 @@
-"use client";
-
 import { DB } from ".";
 import { Pen as IPen } from "@/types/pen";
 

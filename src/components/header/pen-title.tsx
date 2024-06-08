@@ -1,4 +1,3 @@
-"use client";
 import { FocusEventHandler, useEffect, useState } from "react";
 import { useParams } from "wouter";
 

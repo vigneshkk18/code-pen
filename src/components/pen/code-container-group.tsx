@@ -1,5 +1,3 @@
-"use client";
-
 import CodeContainer from "@/components/pen/code-container";
 import CodeContainerResize from "@/components/pen/code-container-resizer";
 

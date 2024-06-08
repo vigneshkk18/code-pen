@@ -1,5 +1,3 @@
-"use client";
-
 import ReactCodeMirror from "@uiw/react-codemirror";
 
 import Header from "@/components/pen/header";
